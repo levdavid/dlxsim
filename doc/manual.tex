@@ -1,0 +1,29 @@
+\documentstyle[nopagenumbers]{article}
+\markboth{DLXSIM \hfill User Commands \hfill Page\ }{DLXSIM \hfill User Commands \hfill Page\ }
+\pagestyle{myheadings}
+\newcommand{\SingleSpace}{\edef\baselinestretch{0.9}\Huge\normalsize}
+\newcommand{\DoubleSpace}{\edef\baselinestretch{1.4}\Huge\normalsize}
+\newcommand{\QuadSpace}{\edef\baselinestretch{2.2}\Huge\normalsize}
+\newcommand{\dlxsim}{{\bf DLXsim}}
+\newenvironment{mylist}{\begin{list}{}{\leftmargin .6in \labelwidth .5in \labelsep .1in \itemsep .1in}}{\end{list}{}{}}
+\newenvironment{commandlevel}{\begin{list}{}{}}{\end{list}{}{}}
+\newenvironment{summary}[1]{\if@twocolumn
+\section*{#1} \else
+\begin{center}
+{\bf #1\vspace{-.5em}\vspace{0pt}}
+\end{center}
+\quotation
+\fi}{\if@twocolumn\else\endquotation\fi}
+% % Page format %
+% \edef\baselinestretch{1.25}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\headsep}{18pt}
+\setlength{\topmargin}{0pt} 
+\setlength{\textheight}{8.7in}
+\setlength{\textwidth}{6.5in}
+\begin{document}
+
+\input{dlxsim}
+
+\end{document}

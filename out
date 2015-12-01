@@ -1,0 +1,8 @@
+cd tcl; make
+rm -f tcl.a
+ar cr tcl.a glob.o tclBasic.o tclCmdAH.o tclCmdIZ.o tclExpr.o  tclGlob.o tclProc.o tclUtil.o panic.o strerror.o strtol.o strtoul.o List_Init.o  List_Insert.o List_ListIns.o List_Remove.o strspn.o  strpbrk.o strchr.o
+ranlib tcl.a
+rm -f dlxsim
+cc -g asm.o cop0.o getput.o io.o main.o sim.o stop.o sym.o trap.o Hash.o HashChainSearch.o Hash_CreateEntry.o Hash_DeleteEntry.o Hash_EnumFirst.o Hash_EnumNext.o Hash_FindEntry.o Hash_InitTable.o tcl/tcl.a -o dlxsim
+ild: (undefined symbol) DP_NAMLEN -- referenced in the text segment of tcl/tcl.a(glob.o)
+gmake: *** [dlxsim] Error 5

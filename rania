@@ -1,0 +1,7 @@
+./dlx.h:#define OP_RFE 		 31
+./doc/report.tex:\$10 & RFE & TRAP & JR & JALR & & & & \\ \hline
+./doc/report2.tex:      OR        0       ORI        0       RFE        1        SB        0  
+./sim.c:    {OP_RFE, IFMT}, {OP_TRAP, IFMT}, {OP_JR, IFMT}, {OP_JALR, IFMT},
+./sim.c:    "MOVI2S", "MOVS2I", "OR", "ORI", "RFE", "SB", "SD", "SEQ",  "SEQI",
+./sim.c:	    case OP_RFE:
+./sim.c:	        errMsg = "RFE instruction is unimplemented";
