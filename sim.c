@@ -2080,7 +2080,13 @@ Simulate(machPtr, interp, singleStep)
 	 */
 	
 	machPtr->cycleCount++;
-	if (machPtr->checkFP && machPtr->cycleCount >= machPtr->checkFP)
+
+    /*
+     * if we flush we do dis.
+     */
+    machPtr->cycleCount+=branchNo + branchYes;
+
+    if (machPtr->checkFP && machPtr->cycleCount >= machPtr->checkFP)
 	  FPwriteBack (machPtr);
 	/* re-zero the cycle count periodically to avoid wrap around probs */
 	if (machPtr->cycleCount >= CYC_CNT_RESET) {
