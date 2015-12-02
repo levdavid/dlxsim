@@ -1693,7 +1693,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      if (errorValue) {
@@ -1710,7 +1710,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      if (errorValue) {
@@ -1727,7 +1727,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      if (errorValue) {
@@ -1745,7 +1745,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      if (errorValue) {
@@ -1762,7 +1762,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -1775,7 +1775,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -1856,7 +1856,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -1869,7 +1869,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -1987,7 +1987,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -2000,7 +2000,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -2034,7 +2034,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
@@ -2047,7 +2047,7 @@ Simulate(machPtr, interp, singleStep)
 				       wordPtr->rs1, wordPtr->rs2,
 				       wordPtr->rd, &errorValue)) {
 		machPtr->FPstalls += stalls;
-		machPtr->cycleCount += stalls;
+		machPtr->cycleCount += stalls; //Do we need to get rid of that?
 		FPwriteBack (machPtr);
 	      }
 	      break;
