@@ -36,7 +36,7 @@ _average:
 	cvtd2f f8,f4
 	movfp2i r1, f8
 	j L1
-	nop
+	;; nop
 L1:
 	;; Restore the saved registers
 	lw r3,-32(r30)
@@ -57,7 +57,7 @@ L1:
 	nop
 	;; Return
 	jr r31
-	nop
+	;;nop
 	.align 4
 LC1:
 	.float 3.500000000000
@@ -95,7 +95,7 @@ _main:
 	lw r4,0(r3)
 	sw 4(r14),r4
 	jal _average
-	nop
+	;; nop
 	sw -12(r30),r1
 	sub r14,r14,#8
 	lhi r4,(LC3>>16)&0xffff
@@ -105,7 +105,7 @@ _main:
 	cvtf2d f4,f4
 	sd 4(r14),f4
 	jal _printf
-	nop
+	;;nop
 	add r14,r14,#16
 L2:
 	;; Restore the saved registers
@@ -125,29 +125,29 @@ L2:
 	nop
 	;; HALT
 	jal _exit
-	nop
+	;; nop ;; here
 
 _exit:
 	trap #0
 	jr r31
-	nop
+	;;nop
 _open:
 	trap #1
 	jr r31
-	nop
+	;;nop
 _close:
 	trap #2
 	jr r31
-	nop
+	;;nop
 _read:
 	trap #3
 	jr r31
-	nop
+;;	nop
 _write:
 	trap #4
 	jr r31
-	nop
+	;;nop
 _printf:
 	trap #5
 	jr r31
-	nop
+	;;nop
