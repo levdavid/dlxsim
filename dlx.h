@@ -345,6 +345,7 @@ typedef struct {
     int FPstalls;               /* Counts floating point stalls */
     int branchYes;              /* Count taken branches. */
     int branchNo;               /* Count not taken branches. */
+    int jumpStall;				/* Count stalls caused by jumps */
     int	operationCount
       [OP_LAST+1];              /* Dynamic instruction counts */
 

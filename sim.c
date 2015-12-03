@@ -173,7 +173,8 @@ static void	freeFPop();
  */
 
 DLX *
-Sim_Create(memSize, interp, au, al, mu, ml, du, dl)
+Sim_Create(strategy, memSize, interp, au, al, mu, ml, du, dl)
+    int strategy;       /*todo: Da's implementation*/
     int memSize;		/* Number of bytes of memory to be
 				 * allocated for the machine. */
     Tcl_Interp *interp;		/* Interpreter to associate with machine. */
@@ -300,7 +301,7 @@ statsReset(machPtr)
     machPtr->FPstalls = 0;
     machPtr->branchYes = 0;
     machPtr->branchNo = 0;
-    machPtr->jBranchYes =0;
+    machPtr->jumpStall =0;
     for (i = 0; i <= OP_LAST; i++)
 	machPtr->operationCount[i] = 0;
 }
@@ -376,7 +377,7 @@ Sim_DumpStats(machPtr, interp, argc, argv)
 	printf("Floating Point Stalls = %d\n", machPtr->FPstalls);
     }
 
-    if (doBranch) {
+    if (doBranch) { /*Update: add */
       int total = machPtr->branchYes + machPtr->branchNo;
       if (!total) printf ("\nNo branch instructions executed.\n");
       else 
@@ -1084,13 +1085,13 @@ Simulate(machPtr, interp, singleStep)
 		pc = last_pc + 1 + ADDR_TO_INDEX(wordPtr->extra);
 		machPtr->branchSerial = machPtr->insCount;
 		machPtr->branchPC = INDEX_TO_ADDR(machPtr->regs[PC_REG]);
-        machPtr->jBranchYes++;
+        machPtr->jumpStall++;
 		break;
 
 	    case OP_JALR:
 		machPtr->regs[R31] =
 			INDEX_TO_ADDR(machPtr->regs[NEXT_PC_REG] + 1);
-	    machPtr->jBranchYes++;
+	    machPtr->jumpStall++;
         case OP_JR:
 		CheckS1 Check
 		tmp = machPtr->regs[wordPtr->rs1];
@@ -1104,7 +1105,7 @@ Simulate(machPtr, interp, singleStep)
 		}
 		machPtr->branchSerial = machPtr->insCount;
 		machPtr->branchPC = INDEX_TO_ADDR(machPtr->regs[PC_REG]);
-        machPtr->jBranchYes++;
+        machPtr->jumpStall++;
 		break;
 
 	    case OP_LB:
@@ -2084,12 +2085,17 @@ Simulate(machPtr, interp, singleStep)
 	 */
 	
 	machPtr->cycleCount++;
+    if(strategy==0){
+
 
     /*
      * if we flush we do dis.
      */
-    machPtr->cycleCount+=branchNo + branchYes;
-
+    } else if(strategy == 1) {
+        machPtr->cycleCount+=branchNo + branchYes + jumpStall;
+    } else if(strategy == 2) {
+        machPtr->cycleCount+=branchYes + jumpStall;
+    }
     if (machPtr->checkFP && machPtr->cycleCount >= machPtr->checkFP)
 	  FPwriteBack (machPtr);
 	/* re-zero the cycle count periodically to avoid wrap around probs */
