@@ -300,6 +300,7 @@ statsReset(machPtr)
     machPtr->FPstalls = 0;
     machPtr->branchYes = 0;
     machPtr->branchNo = 0;
+    machPtr->jBranchYes =0;
     for (i = 0; i <= OP_LAST; i++)
 	machPtr->operationCount[i] = 0;
 }
@@ -1083,12 +1084,14 @@ Simulate(machPtr, interp, singleStep)
 		pc = last_pc + 1 + ADDR_TO_INDEX(wordPtr->extra);
 		machPtr->branchSerial = machPtr->insCount;
 		machPtr->branchPC = INDEX_TO_ADDR(machPtr->regs[PC_REG]);
+        machPtr->jBranchYes++;
 		break;
 
 	    case OP_JALR:
 		machPtr->regs[R31] =
 			INDEX_TO_ADDR(machPtr->regs[NEXT_PC_REG] + 1);
-	    case OP_JR:
+	    machPtr->jBranchYes++;
+        case OP_JR:
 		CheckS1 Check
 		tmp = machPtr->regs[wordPtr->rs1];
 		pc = ADDR_TO_INDEX(tmp);
@@ -1101,6 +1104,7 @@ Simulate(machPtr, interp, singleStep)
 		}
 		machPtr->branchSerial = machPtr->insCount;
 		machPtr->branchPC = INDEX_TO_ADDR(machPtr->regs[PC_REG]);
+        machPtr->jBranchYes++;
 		break;
 
 	    case OP_LB:
