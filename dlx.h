@@ -349,7 +349,7 @@ typedef struct {
     int strategy;				/*1 - flush, 2 - pred-not-taken 3 - btb 4 - ideal 0 - none*/
     int	operationCount
       [OP_LAST+1];              /* Dynamic instruction counts */
-
+    int penalties;				/*penalties depending on selected strategy*/
 
     /* floating point stuff */
 

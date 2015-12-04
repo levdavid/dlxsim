@@ -93,7 +93,7 @@ char **argv;
   while (argv++, --argc) {
     if (*(p = *argv) != '-') {
       usageError:
-        fprintf(stderr, "usage : %s [-al#] [-au#] [-dl#] [-du#] [-ml#] [-mu#] [-ms#]\n", command);
+        fprintf(stderr, "usage : %s [-al#] [-au#] [-dl#] [-du#] [-ml#] [-mu#] [-ms#] [-flushing] [-pred-not-taken]\n", command);
         exit(0);
     }
     
@@ -122,7 +122,7 @@ char **argv;
       strategy = 4;
       continue;
     }
-    
+
     switch (*(p+1)) {
       case 'a' :
       switch (*(p+2)) {
