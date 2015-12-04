@@ -346,6 +346,7 @@ typedef struct {
     int branchYes;              /* Count taken branches. */
     int branchNo;               /* Count not taken branches. */
     int jumpStall;				/* Count stalls caused by jumps */
+    int strategy;				/*1 - flush, 2 - pred-not-taken 3 - btb 4 - ideal 0 - none*/
     int	operationCount
       [OP_LAST+1];              /* Dynamic instruction counts */
 
