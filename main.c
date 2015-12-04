@@ -14,7 +14,6 @@
  */
 
 /* 888888888 added by rania */
-
 #define R_OK 4
 #define W_OK 2
 #define X_OK 1
@@ -61,17 +60,14 @@ static void Interrupt();
  *----------------------------------------------------------------------
  */
 
+#define Check	if (cmd_arg_flag > 1){ fprintf(stderr, "usage : command line option conflict [%s]", p); exit(0);} 
+
 main(argc, argv)
 int argc;
 char **argv;
 {
-	int used = 0;
     char cmd[1000], *p, *command = *argv;
-    char flushing[] = "flushing";
-    char pred[] = "pred-not-taken";
-    char dynBranch[] = "yn-branch-pred";
-    char ideal[] = "ideal";
-    int c, result, i;
+    int c, result;
     int add_units = NUM_ADD_UNITS;
     int mul_units = NUM_MUL_UNITS;
     int div_units = NUM_DIV_UNITS;
@@ -79,110 +75,103 @@ char **argv;
     int mul_latency = FP_MUL_LATENCY;
     int div_latency = FP_DIV_LATENCY;
     int mem_size = MEMSIZE;
-
+    
+    /* command line flag for branch prediction strategies */
+    int strategy = 0;
+    int cmd_arg_flag = 0;
+    /* default 0 -> delay slot
+      1 -> flushing
+      2 -> pred not taken
+      3 -> -dyn-branch-pred
+      4 -> ideal
+    */
+    
     interp = Tcl_CreateInterp();
 
 	/* parse the command line */
 
-    while (argv++, --argc) {
-	if (*(p = *argv) != '-') {
-usageError:
-	    fprintf(stderr, "usage : %s [-al#] [-au#] [-dl#] [-du#] [-ml#] [-mu#] [-ms#]\n", command);
-	    exit(0);
-	}
-	switch (*(p+1)) {
-	case 'a' :
-	    switch (*(p+2)) {
-	    case 'l' :
-		add_latency = atoi(p+3);
-		break;
-	    case 'u' :
-		add_units = atoi(p+3);
-		break;
-	    default :
-		goto usageError;
-		break;
-	    }
-	    break;
-	case 'd' :
-	    switch (*(p+2)) {
-	    case 'l' :
-		div_latency = atoi(p+3);
-		break;
-	    case 'u' :
-		div_units = atoi(p+3);
-		break;
-		case 'y' :
-			if(used>0){
-				goto usageError;
-			}
-			for(i = 1; i < strlen(dynBranch); i++){
-				if(*(p+2+i)!=dynBranch[i]){
-					goto usageError;
-				}
-			}
-			//do whatever it should do here.
-		break;
-	    default :
-		goto usageError;
-		break;
-	    }
-	    break;
-	case 'm' :
-	    switch (*(p+2)) {
-	    case 'l' :
-		mul_latency = atoi(p+3);
-		break;
-	    case 's' :
-		mem_size = (atoi(p+3) + 3) >> 2;
-		break;
-	    case 'u' :
-		mul_units = atoi(p+3);
-		break;
-	    default :
-		goto usageError;
-		break;
-	    }
-	    break;
-	case 'i':
-		if(used>0){
-			goto usageError;
-		}
-		for(i = 1; i < strlen(ideal); i++){
-			if(*(p+1+i)!=ideal[i]){
-				goto usageError;
-			}
-		}
-		used++;
-	break;
-	case 'f':
-		if(used>0){
-			goto usageError;
-		}
-		for(i = 1; i < strlen(flushing); i++){
-			if(*(p+1+i)!=flushing[i]){
-				goto usageError;
-			}
-		}
-		used++;
-	break;
-	case 'p':
-		if(used>0){
-			goto usageError;
-		}
-		for(i = 1; i < strlen(pred); i++){
-			if(*(p+1+i)!=pred[i]){
-				goto usageError;
-			}
-		}
-		used++;
-	break;
-	default :
-	    goto usageError;
-	    break;
-	}
+  while (argv++, --argc) {
+    if (*(p = *argv) != '-') {
+      usageError:
+        fprintf(stderr, "usage : %s [-al#] [-au#] [-dl#] [-du#] [-ml#] [-mu#] [-ms#] [-flushing] [-pred-not-taken]\n", command);
+        exit(0);
+    }
+    
+    /* todo command line */
+    if (!strcmp(p,"-flushing") && !cmd_arg_flag) {
+      Check
+      cmd_arg_flag++;
+      strategy = 1;
+      continue;
+    }
+    else if (!strcmp(p,"-pred-not-taken") && !cmd_arg_flag) {
+      cmd_arg_flag++;
+      Check
+      strategy = 2;
+      continue;
+    }
+    else if (!strcmp(p,"-dyn-branch-pred") && !cmd_arg_flag) {
+      cmd_arg_flag++;
+      Check
+      strategy = 3;
+      continue;
+    }
+    else if (!strcmp(p,"-ideal") && !cmd_arg_flag) {
+      cmd_arg_flag++;
+      Check
+      strategy = 4;
+      continue;
     }
 
+    switch (*(p+1)) {
+      case 'a' :
+      switch (*(p+2)) {
+        case 'l' :
+          add_latency = atoi(p+3);
+          break;
+        case 'u' :
+          add_units = atoi(p+3);
+          break;
+        default :
+          goto usageError;
+          break;
+      }
+      break;
+      case 'd' :
+      switch (*(p+2)) {
+        case 'l' :
+        div_latency = atoi(p+3);
+        break;
+          case 'u' :
+        div_units = atoi(p+3);
+        break;
+          default :
+        goto usageError;
+        break;
+      }
+      break;
+      case 'm' :
+        switch (*(p+2)) {
+        case 'l' :
+          mul_latency = atoi(p+3);
+          break;
+        case 's' :
+          mem_size = (atoi(p+3) + 3) >> 2;
+          break;
+        case 'u' :
+          mul_units = atoi(p+3);
+          break;
+        default :
+          goto usageError;
+        break;
+        }
+        break;
+      default :
+        goto usageError;
+        break;
+    }
+  }
+    
     if (mem_size < 1) {
 	fprintf(stderr, "invalid memory size (>=1)\n");
 	exit(0);
@@ -218,7 +207,9 @@ usageError:
 	exit(0);
     }
 
-    machPtr = Sim_Create(mem_size, interp,
+    
+    /* todo pass strategy to machptr ? */
+    machPtr = Sim_Create(strategy, mem_size, interp,
 		add_units, add_latency,
 		mul_units, mul_latency,
 		div_units, div_latency);
